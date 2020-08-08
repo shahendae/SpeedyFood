@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SpeedyFood.Models;
 
 namespace SpeedyFood.Data
 {
@@ -12,5 +13,6 @@ namespace SpeedyFood.Data
             : base(options)
         {
         }
+        public DbSet<Category> Category { get; set; }
     }
 }

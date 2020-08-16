@@ -8,5 +8,8 @@ namespace SpeedyFood.Repository
 {
     public interface ISubCategoryRepository : IGenericRepository<SubCategory>
     {
+        Task<IEnumerable<SubCategory>> GetSubCategoriesWithCategory();
+        Task<List<string>> GetSubCategoriesName();
+        SubCategory GetSubCategoryWithCategory(int id);
     }
 }

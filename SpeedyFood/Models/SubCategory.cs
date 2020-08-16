@@ -10,7 +10,7 @@ namespace SpeedyFood.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Sub Category Name")]
+        [Display(Name = "Sub Category")]
         public string Name { get; set; }
         [Required]
         [Display(Name ="Category")]

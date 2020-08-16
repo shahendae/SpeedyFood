@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpeedyFood.Repository
 {
-    public interface ICategoryRepository : IGenericRepository<Category>
+    public interface ISubCategoryRepository : IGenericRepository<SubCategory>
     {
-
     }
 }

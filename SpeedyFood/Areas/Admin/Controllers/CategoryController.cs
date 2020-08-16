@@ -11,15 +11,15 @@ namespace SpeedyFood.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepository = categoryRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _unitOfWork.Category.GetAll();
             return View(categories);
         }
         public IActionResult Create()
@@ -32,7 +32,8 @@ namespace SpeedyFood.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _categoryRepository.AddCategory(category);
+                await _unitOfWork.Category.Add(category);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -46,7 +47,7 @@ namespace SpeedyFood.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category category = await _categoryRepository.GetCategoryById((int)id);
+            Category category = await _unitOfWork.Category.GetById((int)id);
             if(category == null)
             {
                 return NotFound();
@@ -55,11 +56,12 @@ namespace SpeedyFood.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Category category)
+        public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
-                await _categoryRepository.EditCategory(category);
+                _unitOfWork.Category.Edit(category);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -73,7 +75,7 @@ namespace SpeedyFood.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category category = await _categoryRepository.GetCategoryById((int)id);
+            Category category = await _unitOfWork.Category.GetById((int)id);
             if (category == null)
             {
                 return NotFound();
@@ -84,12 +86,14 @@ namespace SpeedyFood.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            Category category = await _categoryRepository.GetCategoryById(id);
+            Category category = await _unitOfWork.Category.GetById(id);
             if(category == null)
             {
                 return View();
             }
-            await _categoryRepository.DeleteCategory(category);
+
+            _unitOfWork.Category.Delete(category);
+            _unitOfWork.Complete();
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Details(int? id)
@@ -98,7 +102,7 @@ namespace SpeedyFood.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category category = await _categoryRepository.GetCategoryById((int)id);
+            Category category = await _unitOfWork.Category.GetById((int)id);
             if (category == null)
             {
                 return NotFound();

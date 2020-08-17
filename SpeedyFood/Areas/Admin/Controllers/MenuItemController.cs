@@ -48,14 +48,18 @@ namespace SpeedyFood.Areas.Admin.Controllers
                 await _unitOfWork.MenuItem.Add(model.MenuItem);
                 _unitOfWork.Complete();
                 // save image on server side inside wwwroot file
+                //Get the root path
                 string webRootPath = _webHost.WebRootPath;
                 var files = HttpContext.Request.Form.Files;
                 var menuItemFromDb = await _unitOfWork.MenuItem.GetById(model.MenuItem.Id);
 
                 if(files.Count() > 0)
                 {
+                    //get images inside wwwroot
                     var uploads = Path.Combine(webRootPath, "images");
+                    //get file extension 
                     var extension = Path.GetExtension(files[0].FileName);
+                    // create image with name of the id 
                     using(var filesStream = new FileStream(Path.Combine(uploads, model.MenuItem.Id + extension), FileMode.Create))
                     {
                         files[0].CopyTo(filesStream);

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MenuItem>
+﻿@model IEnumerable<Coupon>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,7 +7,7 @@
 <div class="border backgroundWhite">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info">Menu Item List</h2>
+            <h2 class="text-info">Coupon List</h2>
         </div>
         <div class="col-6 text-right">
             <partial name="_CreateButtonPartial" />
@@ -23,13 +23,13 @@
                         @Html.DisplayNameFor(m => m.Name)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.Price)
+                        @Html.DisplayNameFor(m => m.Discount)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.CategoryId)
+                        @Html.DisplayNameFor(m => m.MinAmount)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.SubCategoryId)
+                        @Html.DisplayNameFor(m => m.IsActive)
                     </th>
                     <th></th>
                     <th></th>
@@ -41,13 +41,13 @@
                             @Html.DisplayFor(m => item.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.Price)
+                            @Html.DisplayFor(m => item.Discount)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.Category.Name)
+                            @Html.DisplayFor(m => item.MinAmount)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.SubCategory.Name)
+                            @Html.DisplayFor(m => item.IsActive)
                         </td>
                         <td>
                             <partial name="_TableButtonPartial" model="@item.Id" />
@@ -58,7 +58,7 @@
         }
         else
         {
-            <p>No Menu Item exists ...</p>
+            <p>No Coupons exists ...</p>
         }
     </div>
 </div>

@@ -12,6 +12,7 @@ namespace SpeedyFood.Repository
         public ICategoryRepository Category { get; }
         public ISubCategoryRepository SubCategory { get; }
         public IMenuItemRepository MenuItem { get; }
+        public ICouponRepository Coupon { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -19,6 +20,7 @@ namespace SpeedyFood.Repository
             Category = new CategoryRepository(_context);
             SubCategory = new SubCategoryRepository(_context);
             MenuItem = new MenuItemRepository(_context);
+            Coupon = new CouponRepository(_context);
         }
         public int Complete()
         {

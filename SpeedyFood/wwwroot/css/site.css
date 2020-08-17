@@ -93,3 +93,9 @@ body {
     border-radius: 10px;
     border: 1px solid #ddd;
 }
+
+.menuItemImg {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #bbb9b9;
+}

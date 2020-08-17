@@ -30,6 +30,7 @@ namespace SpeedyFood
         {
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+            services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<ApplicationDbContext>(options =>

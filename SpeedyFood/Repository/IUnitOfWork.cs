@@ -9,6 +9,7 @@ namespace SpeedyFood.Repository
     {
         ICategoryRepository Category { get; }
         ISubCategoryRepository SubCategory { get; }
+        IMenuItemRepository MenuItem { get; }
         int Complete();
     }
 }

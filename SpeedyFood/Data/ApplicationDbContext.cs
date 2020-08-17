@@ -15,5 +15,6 @@ namespace SpeedyFood.Data
         }
         public DbSet<Category> Category { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
     }
 }

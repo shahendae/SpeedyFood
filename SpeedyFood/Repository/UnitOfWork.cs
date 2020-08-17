@@ -11,12 +11,14 @@ namespace SpeedyFood.Repository
         private readonly ApplicationDbContext _context;
         public ICategoryRepository Category { get; }
         public ISubCategoryRepository SubCategory { get; }
+        public IMenuItemRepository MenuItem { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Category = new CategoryRepository(_context);
             SubCategory = new SubCategoryRepository(_context);
+            MenuItem = new MenuItemRepository(_context);
         }
         public int Complete()
         {

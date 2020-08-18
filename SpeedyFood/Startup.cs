@@ -32,12 +32,14 @@ namespace SpeedyFood
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
             services.AddScoped<IMenuItemRepository, MenuItemRepository>();
             services.AddScoped<ICouponRepository, CouponRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,10 +10,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SpeedyFood.Models;
 using SpeedyFood.Models.ViewModels;
 using SpeedyFood.Repository;
+using SpeedyFood.Utility;
 
 namespace SpeedyFood.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.ManagerUser)]
+
     public class SubCategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

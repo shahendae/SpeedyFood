@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpeedyFood.Models;
 using SpeedyFood.Repository;
+using SpeedyFood.Utility;
 
 namespace SpeedyFood.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.ManagerUser)]
+
     public class CouponController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

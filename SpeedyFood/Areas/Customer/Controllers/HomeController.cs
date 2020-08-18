@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SpeedyFood.Models;
+using SpeedyFood.Models.ViewModels;
+using SpeedyFood.Repository;
 
 namespace SpeedyFood.Controllers
 {
@@ -13,15 +15,24 @@ namespace SpeedyFood.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IndexViewModel indexVM = new IndexViewModel()
+            {
+                Categories = await _unitOfWork.Category.GetAll(),
+                MenuItems = await _unitOfWork.MenuItem.GetMenuItemsWithCategoryAndSubCategory(),
+                Coupons = _unitOfWork.Coupon.Find(m => m.IsActive == true).ToList()
+            };
+
+            return View(indexVM);
         }
 
         public IActionResult Privacy()

@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SpeedyFood.Repository;
+using Microsoft.AspNetCore.Http;
 
 namespace SpeedyFood.Areas.Identity.Pages.Account
 {
@@ -18,14 +20,17 @@ namespace SpeedyFood.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager, 
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -82,6 +87,10 @@ namespace SpeedyFood.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = _unitOfWork.User.Find(m => m.Email == Input.Email).FirstOrDefault();
+                    int count = _unitOfWork.ShoppingCart.CountApplicationUser(user.Id);
+                    HttpContext.Session.SetInt32("ssCartCount", count);
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

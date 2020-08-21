@@ -12,6 +12,8 @@ namespace SpeedyFood.Repository
         IMenuItemRepository MenuItem { get; }
         ICouponRepository Coupon { get; }
         IUserRepository User { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+
         int Complete();
     }
 }

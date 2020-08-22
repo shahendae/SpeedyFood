@@ -17,16 +17,18 @@ namespace SpeedyFood.Models
         [Display(Name = "Order Total")]
         public double OrderTotal { get; set; }
         public string CouponCode { get; set; }
-        public double CouponDiscount { get; set; }
+
+        [Display(Name = "Date & Time")]
         public DateTime PickUpDateAndTime { get; set; }
         public string Status { get; set; }
+        [Display(Name = "Any Comments:")]
         public string Comments { get; set; }
         public string PaymentStatus { get; set; }
-        public string TransactionId { get; set; }
-        [Display(Name = "Pickup Name")]
+
+        [Display(Name = "Name")]
         public string PickUpName { get; set; }
 
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Phone")]
         public string PhoneNumber { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

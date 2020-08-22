@@ -40,20 +40,20 @@
                                     </div>
                                     <div class="col-6 col-sm-4 col-md-6">
                                         <div class="float-right mx-1">
-                                            <button type="submit" class="btn btn-primary" asp-action="plus"
+                                            <button type="submit" class="btn btn-primary" asp-action="Plus"
                                                     asp-route-cartId="@item.Id">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
                                         <div class="float-right mx-1">
-                                            <button type="submit" class="btn btn-danger" asp-action="minus"
+                                            <button type="submit" class="btn btn-danger" asp-action="Minus"
                                                     asp-route-cartId="@item.Id">
                                                 <i class="fas fa-minus"></i>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="col-2 col-sm-4 col-md-2 text-right">
-                                        <button type="submit" class="btn btn-outline-danger" asp-action="remove"
+                                        <button type="submit" class="btn btn-outline-danger" asp-action="Remove"
                                                 asp-route-cartId="@item.Id">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -106,4 +106,20 @@
         </div>
     }
 </form>
+
+@section Scripts{
+    <script>
+        $(function () {
+            var couponCode = document.getElementById("CouponCode").value;
+            if (couponCode.length > 0) {
+                document.getElementById("applyCoupon").style.display = 'none';
+                document.getElementById("removeCoupon").style.display = '';
+            }
+            else {
+                document.getElementById("applyCoupon").style.display = '';
+                document.getElementById("removeCoupon").style.display = 'none';
+            }
+        });
+    </script>
+}
 

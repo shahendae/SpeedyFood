@@ -34,6 +34,8 @@ namespace SpeedyFood
             services.AddScoped<ICouponRepository, CouponRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<ApplicationDbContext>(options =>

@@ -9,5 +9,6 @@ namespace SpeedyFood.Repository
     public interface IShoppingCartRepository : IGenericRepository<ShoppingCart>
     {
         int CountApplicationUser(string id);
+        void RemoveList(List<ShoppingCart> shoppingCarts);
     }
 }

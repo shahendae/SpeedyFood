@@ -13,6 +13,8 @@ namespace SpeedyFood.Repository
         ICouponRepository Coupon { get; }
         IUserRepository User { get; }
         IShoppingCartRepository ShoppingCart { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+        IOrderDetailsRepository OrderDetails { get; }
 
         int Complete();
     }

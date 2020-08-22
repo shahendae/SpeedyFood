@@ -1,0 +1,120 @@
+﻿@model SpeedyFood.Models.ViewModels.OrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    <br />
+    <div class="backgroundWhiteBorder">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="container">
+            <div class="card">
+                <div class="card-header bg-dark text-light ml-0 row container">
+                    <div class="col-6">
+                        <i class="fas fa-shopping-cart"></i> Order Summary
+                    </div>
+                    <div class="col-6 text-right">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index"
+                           class="btn btn-outline-info btn-sm">
+                            &nbsp; Back To Cart
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container rounded p-2">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 pb-4">
+                                <div class="row">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-info">Pickup Information</span>
+                                    </h4>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label asp-for="@Model.OrderHeader.PickUpName"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.OrderHeader.PickUpName" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="@Model.OrderHeader.PickUpName" class="text-danger"></span>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label asp-for="@Model.OrderHeader.PhoneNumber"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label asp-for="@Model.OrderHeader.PickUpDateAndTime"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.OrderHeader.PickUpDateAndTime" value="" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="@Model.OrderHeader.PickUpDateAndTime" class="text-danger"></span>
+
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label asp-for="@Model.OrderHeader.Comments"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <textarea asp-for="@Model.OrderHeader.Comments" class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-5 offset-lg-1">
+                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-info">Order Summary</span>
+                                </h4>
+                                <ul class="list-group mb-3">
+                                    @foreach (var item in Model.ShoppingCarts)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="my-0">@item.MenuItem.Name</h6>
+                                                <small class="text-muted">Quantity: @item.Count</small>
+                                            </div>
+                                            <span class="text-muted">@(item.MenuItem.Price * item.Count) EGP</span>
+                                        </li>
+                                    }
+                                    @if (Model.OrderHeader.CouponCode != null)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <div class="text-success">
+                                                <h6 class="my-0">Promo Code</h6>
+                                                <small class="text-success">@Model.OrderHeader.CouponCode</small>
+                                            </div>
+                                            <span class="text-success">- @(Model.OrderHeader.OrderTotalBeforeCoupon - Model.OrderHeader.OrderTotal) EGP</span>
+                                        </li>
+                                    }
+
+                                    <li class="list-group-item d-flex justify-content-between bg-light">
+                                        <small class="text-info">Total (EGP) </small>
+                                        <strong class="text-info">@Model.OrderHeader.OrderTotal EGP</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-12 col-md-4 offset-md-8">
+                            <button type="submit" value="Place Order" class="btn btn-success form-control">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

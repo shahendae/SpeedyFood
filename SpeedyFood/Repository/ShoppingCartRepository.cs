@@ -22,5 +22,9 @@ namespace SpeedyFood.Repository
                 .ToList()
                 .Count();
         }
+        public void RemoveList(List<ShoppingCart> shoppingCarts)
+        {
+            _context.ShoppingCarts.RemoveRange(shoppingCarts);
+        }
     }
 }

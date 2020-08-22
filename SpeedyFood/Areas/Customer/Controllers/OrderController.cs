@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SpeedyFood.Models.ViewModels;
 using SpeedyFood.Repository;
 
 namespace SpeedyFood.Areas.Customer.Controllers
@@ -22,9 +24,18 @@ namespace SpeedyFood.Areas.Customer.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult ConfirmOrder(int id)
+        public async Task<IActionResult> ConfirmOrder(int id)
         {
-            return View();
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            OrderViewModel orderViewModel = new OrderViewModel()
+            {
+                OrderHeader = await _unitOfWork.OrderHeader.GetOrderHeaderWithApplicationUser(id, claims.Value),
+                OrderDetailsList = _unitOfWork.OrderDetails.GetOrderDetailsWithMenuItems(id)
+            };
+
+            return View(orderViewModel);
         }
     }
 }

@@ -130,3 +130,7 @@ body {
         background-color: #545b62;
         color: #fff;
     }
+
+.borderRight {
+    border-right: 1px solid #bbb9b9;
+}

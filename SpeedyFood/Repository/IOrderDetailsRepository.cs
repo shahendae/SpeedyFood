@@ -8,5 +8,6 @@ namespace SpeedyFood.Repository
 {
     public interface IOrderDetailsRepository : IGenericRepository<OrderDetails>
     {
+        List<OrderDetails> GetOrderDetailsWithMenuItems(int orderHeaderId);
     }
 }

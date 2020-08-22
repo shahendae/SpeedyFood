@@ -78,7 +78,7 @@ namespace SpeedyFood.Controllers
                 }
                 else
                 {
-                    shoppingCartFromDb.Count = shoppingCartFromDb.Count + shoppingCart.Count;
+                    shoppingCartFromDb.Count += shoppingCart.Count;
                 }
                 _unitOfWork.Complete();
                 var count = _unitOfWork.ShoppingCart.CountApplicationUser(shoppingCart.ApplicationUserId);

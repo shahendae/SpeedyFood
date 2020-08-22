@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SpeedyFood.Models.ViewModels
 {
-    public class OrderDetailsViewModel
+    public class ShoppingCartViewModel
     {
         public List<ShoppingCart> ShoppingCarts { get; set; }
         public OrderHeader OrderHeader { get; set; }

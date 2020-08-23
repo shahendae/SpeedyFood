@@ -9,5 +9,6 @@ namespace SpeedyFood.Repository
     public interface IOrderHeaderRepository : IGenericRepository<OrderHeader>
     {
         Task<OrderHeader> GetOrderHeaderWithApplicationUser(int HeaderId, string UserId);
+        Task<List<OrderHeader>> GetOrderHeadersWithApplicationUser(string id);
     }
 }

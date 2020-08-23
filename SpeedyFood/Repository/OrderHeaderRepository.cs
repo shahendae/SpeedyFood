@@ -22,5 +22,12 @@ namespace SpeedyFood.Repository
                 .Include(m => m.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == HeaderId && m.ApplicationUserId == UserId);
         }
+        public async Task<List<OrderHeader>> GetOrderHeadersWithApplicationUser(string id)
+        {
+            return await _context.OrderHeaders
+                .Include(m => m.ApplicationUser)
+                .Where(m => m.ApplicationUserId == id)
+                .ToListAsync();
+        }
     }
 }

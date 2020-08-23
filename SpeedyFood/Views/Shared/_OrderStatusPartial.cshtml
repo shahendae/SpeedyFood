@@ -1,0 +1,28 @@
+﻿@model String
+@using SpeedyFood.Utility
+
+@if (Model == StaticDetails.StatusInProgress)
+{
+    <div class="justify-content-center">
+        <img src="~/Images/InKitchen.png" width="900" />
+    </div>
+}
+
+@if (Model == StaticDetails.StatusCompleted)
+{
+    <div class="justify-content-center">
+        <img src="~/Images/completed.png" width="900" />
+    </div>
+}
+@if (Model == StaticDetails.StatusReady)
+{
+    <div class="justify-content-center">
+        <img src="~/Images/ReadyForPickup.png" width="900" />
+    </div>
+}
+@if (Model == StaticDetails.StatusSubmitted)
+{
+    <div class="justify-content-center">
+        <img src="~/Images/OrderPlaced.png" width="900" />
+    </div>
+}

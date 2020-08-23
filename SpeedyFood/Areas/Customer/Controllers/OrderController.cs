@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SpeedyFood.Models;
 using SpeedyFood.Models.ViewModels;
 using SpeedyFood.Repository;
+using SpeedyFood.Utility;
 
 namespace SpeedyFood.Areas.Customer.Controllers
 {
@@ -82,6 +83,61 @@ namespace SpeedyFood.Areas.Customer.Controllers
             OrderHeader orderHeader = await _unitOfWork.OrderHeader.GetOrderHeaderWithApplicationUser(Id, claims.Value);
 
             return PartialView("_OrderStatusPartial", orderHeader.Status);
+        }
+
+        [Authorize(Roles = StaticDetails.KitchenUser + "," + StaticDetails.ManagerUser)]
+        public IActionResult ManageOrders()
+        {
+            List<OrderViewModel> orderVMList = new List<OrderViewModel>();
+
+            List<OrderHeader> orderHeadersList = _unitOfWork.OrderHeader.Find(m => m.Status == StaticDetails.StatusSubmitted || m.Status == StaticDetails.StatusInProgress)
+                .OrderByDescending(m => m.PickUpDateAndTime)
+                .ToList();
+
+            foreach (var item in orderHeadersList)
+            {
+                OrderViewModel orderVM = new OrderViewModel()
+                {
+                    OrderHeader = item,
+                    OrderDetailsList = _unitOfWork.OrderDetails.GetOrderDetailsWithMenuItems(item.Id)
+                };
+
+                orderVMList.Add(orderVM);
+            }
+
+            return View(orderVMList);
+        }
+
+        [Authorize(Roles = StaticDetails.KitchenUser + "," + StaticDetails.ManagerUser)]
+        public async Task<IActionResult> OrderPrepare(int id)
+        {
+            OrderHeader orderHeader = await _unitOfWork.OrderHeader.GetById(id);
+            orderHeader.Status = StaticDetails.StatusInProgress;
+            _unitOfWork.Complete();
+            return RedirectToAction("ManageOrders");
+
+        }
+        [Authorize(Roles = StaticDetails.KitchenUser + "," + StaticDetails.ManagerUser)]
+        public async Task<IActionResult> OrderCancel(int id)
+        {
+            OrderHeader orderHeader = await _unitOfWork.OrderHeader.GetById(id);
+            orderHeader.Status = StaticDetails.StatusCancelled;
+            _unitOfWork.Complete();
+            return RedirectToAction("ManageOrders");
+        }
+        [Authorize(Roles = StaticDetails.KitchenUser + "," + StaticDetails.ManagerUser)]
+        public async Task<IActionResult> OrderReady(int id)
+        {
+            OrderHeader orderHeader = await _unitOfWork.OrderHeader.GetById(id);
+            orderHeader.Status = StaticDetails.StatusReady;
+            _unitOfWork.Complete();
+            return RedirectToAction("ManageOrders");
+
+        }
+
+        public IActionResult PickupOrders()
+        {
+            return View();
         }
     }
 }

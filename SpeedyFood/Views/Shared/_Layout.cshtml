@@ -50,6 +50,27 @@
                             </li>
                         }
 
+                        @if (User.IsInRole(StaticDetails.ManagerUser) || User.IsInRole(StaticDetails.FrontDeskUser) || User.IsInRole(StaticDetails.KitchenUser))
+                        {
+                            <li class="nav-item dropdown text-white-50">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Orders
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    @if (User.IsInRole(StaticDetails.KitchenUser) || User.IsInRole(StaticDetails.ManagerUser))
+                                    {
+                                        <a class="dropdown-item" asp-action="ManageOrders" asp-controller="Order" asp-area="Customer">Manage Orders</a>
+                                    }
+
+                                    @if (User.IsInRole(StaticDetails.FrontDeskUser) || User.IsInRole(StaticDetails.ManagerUser))
+                                    {
+                                        <a class="dropdown-item" asp-action="PickupOrders" asp-controller="Order" asp-area="Customer">Orders Pickup</a>
+                                    }
+
+                                </div>
+                            </li>
+                        }
+
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("ssCartCount") != null)
                         {
                             <li class="nav-item">

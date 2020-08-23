@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpeedyFood.Models;
@@ -13,6 +14,7 @@ using SpeedyFood.Utility;
 namespace SpeedyFood.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize]
     public class ShoppingCartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

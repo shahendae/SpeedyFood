@@ -92,23 +92,6 @@ namespace SpeedyFood.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if(!await _roleManager.RoleExistsAsync(StaticDetails.CustomerEndUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.CustomerEndUser));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(StaticDetails.FrontDeskUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.FrontDeskUser));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(StaticDetails.ManagerUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.ManagerUser));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(StaticDetails.KitchenUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.KitchenUser));
-                    }
-
                     if(role == StaticDetails.KitchenUser)
                     {
                         await _userManager.AddToRoleAsync(user, StaticDetails.KitchenUser);
@@ -132,29 +115,10 @@ namespace SpeedyFood.Areas.Identity.Pages.Account
                                 return LocalRedirect(returnUrl);
                             }
                         }
-                    }
-
-                    //_logger.LogInformation("User created a new account with password.");
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //{
-                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //}
-                    //else
-                    //{
-                       
-                        return RedirectToAction("Index", "User", new { area = "Admin"});
-                    //}
+                    }                       
+                    
+                    return RedirectToAction("Index", "User", new { area = "Admin"});
+                    
                 }
                 foreach (var error in result.Errors)
                 {

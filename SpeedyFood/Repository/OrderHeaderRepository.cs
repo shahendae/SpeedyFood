@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpeedyFood.Data;
 using SpeedyFood.Models;
+using SpeedyFood.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,30 @@ namespace SpeedyFood.Repository
             return await _context.OrderHeaders
                 .Include(m => m.ApplicationUser)
                 .Where(m => m.ApplicationUserId == id)
+                .ToListAsync();
+        }
+        public async Task<List<OrderHeader>> GetOrderHeadersWithReadyStatus()
+        {
+            return await _context.OrderHeaders
+                .Include(m => m.ApplicationUser)
+                .Where(m => m.Status == StaticDetails.StatusReady)
+                .ToListAsync();
+        }
+
+        public async Task<List<OrderHeader>> SearchOrderHeadersByPickupNames(string searchName)
+        {
+            return await _context.OrderHeaders
+                .Include(m => m.ApplicationUser)
+                .Where(m => m.PickUpName.ToLower().Contains(searchName.ToLower()))
+                .OrderByDescending(m => m.OrderDate)
+                .ToListAsync();
+        }
+        public async Task<List<OrderHeader>> SearchOrderHeadersByPhone(string searchPhone)
+        {
+            return await _context.OrderHeaders
+                .Include(m => m.ApplicationUser)
+                .Where(m => m.PhoneNumber.Contains(searchPhone))
+                .OrderByDescending(m => m.OrderDate)
                 .ToListAsync();
         }
     }

@@ -161,8 +161,7 @@ namespace SpeedyFood.Areas.Customer.Controllers
             ShoppingCartVM.ShoppingCarts = _unitOfWork.ShoppingCart.Find(m => m.ApplicationUserId == claims.Value).ToList();
             ShoppingCartVM.OrderHeader.ApplicationUserId = claims.Value;
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
-            ShoppingCartVM.OrderHeader.Status = StaticDetails.StatusInProgress;
-            ShoppingCartVM.OrderHeader.PaymentStatus = StaticDetails.PaymentStatusPending;
+            ShoppingCartVM.OrderHeader.Status = StaticDetails.StatusSubmitted;
 
             await _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
             _unitOfWork.Complete();

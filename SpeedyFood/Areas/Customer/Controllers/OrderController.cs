@@ -39,6 +39,7 @@ namespace SpeedyFood.Areas.Customer.Controllers
 
             return View(orderViewModel);
         }
+
         [Authorize]
         public async Task<IActionResult> OrderHistory()
         {
@@ -117,6 +118,7 @@ namespace SpeedyFood.Areas.Customer.Controllers
             return RedirectToAction("ManageOrders");
 
         }
+
         [Authorize(Roles = StaticDetails.KitchenUser + "," + StaticDetails.ManagerUser)]
         public async Task<IActionResult> OrderCancel(int id)
         {
@@ -125,6 +127,7 @@ namespace SpeedyFood.Areas.Customer.Controllers
             _unitOfWork.Complete();
             return RedirectToAction("ManageOrders");
         }
+
         [Authorize(Roles = StaticDetails.KitchenUser + "," + StaticDetails.ManagerUser)]
         public async Task<IActionResult> OrderReady(int id)
         {
@@ -135,9 +138,61 @@ namespace SpeedyFood.Areas.Customer.Controllers
 
         }
 
-        public IActionResult PickupOrders()
+        [Authorize(Roles = StaticDetails.FrontDeskUser + "," + StaticDetails.ManagerUser)]
+        public async Task<IActionResult> PickupOrders(string SearchName = null, string SearchPhone = null, string SearchEmail = null)
         {
-            return View();
+            List<OrderViewModel> orderVMList = new List<OrderViewModel>();
+            List<OrderHeader> orderHeadersList = new List<OrderHeader>();
+
+            if (SearchName != null || SearchPhone != null || SearchEmail != null)
+            {
+                if(SearchName != null)
+                {
+                    orderHeadersList = await _unitOfWork.OrderHeader.SearchOrderHeadersByPickupNames(SearchName);
+                }
+                else
+                {
+                    if(SearchEmail != null)
+                    {
+                        ApplicationUser applicationUser = _unitOfWork.User.Find(m => m.Email.ToLower().Contains(SearchEmail.ToLower())).FirstOrDefault();
+                        orderHeadersList = await _unitOfWork.OrderHeader.GetOrderHeadersWithApplicationUser(applicationUser.Id);
+                    }
+                    else
+                    {
+                        if(SearchPhone != null)
+                        {
+                            orderHeadersList = await _unitOfWork.OrderHeader.SearchOrderHeadersByPhone(SearchPhone);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                orderHeadersList = await _unitOfWork.OrderHeader.GetOrderHeadersWithReadyStatus();
+            }
+
+
+            foreach (var item in orderHeadersList)
+            {
+                OrderViewModel orderVM = new OrderViewModel()
+                {
+                    OrderHeader = item,
+                    OrderDetailsList = _unitOfWork.OrderDetails.GetOrderDetailsWithMenuItems(item.Id)
+                };
+
+                orderVMList.Add(orderVM);
+            }
+
+            return View(orderVMList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PickupOrders(int orderId)
+        {
+            OrderHeader orderHeader = await _unitOfWork.OrderHeader.GetById(orderId);
+            orderHeader.Status = StaticDetails.StatusCompleted;
+            _unitOfWork.Complete();
+            return RedirectToAction("PickupOrders");
         }
     }
 }

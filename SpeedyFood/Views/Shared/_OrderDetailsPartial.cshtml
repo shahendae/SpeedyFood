@@ -1,6 +1,7 @@
 ﻿@model SpeedyFood.Models.ViewModels.OrderViewModel
+@using SpeedyFood.Utility
 
-<form method="post">
+<form method="post" asp-action="PickupOrders" asp-controller="Order" asp-route-orderId="@Model.OrderHeader.Id">
     <div class="container row border backgroundWhiteBorder10Padding ml-1">
         <div class="col-lg-8 col-12 borderRight">
             <br />
@@ -80,7 +81,16 @@
                 </li>
             </ul>
             <br />
-            <button type="submit" disabled class="btn btn-info form-control">@Model.OrderHeader.Status</button>
+            @if (Model.OrderHeader.Status.Equals(StaticDetails.StatusReady) && User.IsInRole(StaticDetails.FrontDeskUser) || User.IsInRole(StaticDetails.ManagerUser))
+            {
+                <button type="submit" class="btn btn-success form-control">
+                    <i class="far fa-thumbs-up"></i> Confirm Pickup
+                </button>
+            }
+            else
+            {
+                <button type="submit" disabled class="btn btn-info form-control">@Model.OrderHeader.Status</button>
+            }
         </div>
     </div>
 </form>

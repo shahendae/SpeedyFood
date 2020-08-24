@@ -10,5 +10,8 @@ namespace SpeedyFood.Repository
     {
         Task<OrderHeader> GetOrderHeaderWithApplicationUser(int HeaderId, string UserId);
         Task<List<OrderHeader>> GetOrderHeadersWithApplicationUser(string id);
+        Task<List<OrderHeader>> GetOrderHeadersWithReadyStatus();
+        Task<List<OrderHeader>> SearchOrderHeadersByPickupNames(string searchName);
+        Task<List<OrderHeader>> SearchOrderHeadersByPhone(string searchPhone);
     }
 }

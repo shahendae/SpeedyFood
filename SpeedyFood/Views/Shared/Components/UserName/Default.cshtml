@@ -1,3 +1,12 @@
 ﻿@model SpeedyFood.Models.ApplicationUser
 
-Hi! @Model.Name <i class="far fa-user"></i>
+@if (Model != null)
+{
+    <span>Hi! @Model.Name <i class="far fa-user"></i></span>
+}
+else
+{
+    <span></span>
+}
+
+

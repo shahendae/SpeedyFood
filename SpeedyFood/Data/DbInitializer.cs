@@ -12,17 +12,15 @@ namespace SpeedyFood.Data
 {
     public class DbInitializer : IDbInitializer
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _db;
 
-        public DbInitializer(IUnitOfWork unitOfWork, 
+        public DbInitializer( 
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ApplicationDbContext db)
         {
-            _unitOfWork = unitOfWork;
             _userManager = userManager;
             _roleManager = roleManager;
             _db = db;

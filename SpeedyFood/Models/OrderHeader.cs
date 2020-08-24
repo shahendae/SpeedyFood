@@ -23,7 +23,6 @@ namespace SpeedyFood.Models
         public string Status { get; set; }
         [Display(Name = "Any Comments:")]
         public string Comments { get; set; }
-        public string PaymentStatus { get; set; }
 
         [Display(Name = "Name")]
         public string PickUpName { get; set; }

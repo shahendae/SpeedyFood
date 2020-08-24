@@ -24,9 +24,6 @@ namespace SpeedyFood.Utility
         public const string StatusCompleted = "Completed";
         public const string StatusCancelled = "Cancelled";
 
-        public const string PaymentStatusPending = "Pending";
-        public const string PaymentStatusRejected = "Rejected";
-        public const string PaymentStatusApproved = "Approved";
 
         public static double CountDiscount(Coupon coupon, double OriginalTotal)
         {

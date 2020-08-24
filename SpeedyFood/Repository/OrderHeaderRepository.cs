@@ -28,6 +28,7 @@ namespace SpeedyFood.Repository
             return await _context.OrderHeaders
                 .Include(m => m.ApplicationUser)
                 .Where(m => m.ApplicationUserId == id)
+                .OrderByDescending(m => m.PickUpDateAndTime)
                 .ToListAsync();
         }
         public async Task<List<OrderHeader>> GetOrderHeadersWithReadyStatus()

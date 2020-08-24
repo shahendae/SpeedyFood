@@ -14,8 +14,7 @@ namespace SpeedyFood.Models
         public string Description { get; set; }
         public double Price { get; set; }
         public string Image { get; set; }
-        public string Spicyness { get; set; }
-        public enum ESpicy { NA = 0, NotSpicy = 1, Spicy = 2, VerySpicy = 3 }
+
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
         [Display(Name = "Sub Category")]

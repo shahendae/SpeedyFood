@@ -140,7 +140,6 @@ namespace SpeedyFood.Areas.Admin.Controllers
                 menuItemFromDb.Name = model.MenuItem.Name;
                 menuItemFromDb.Price = model.MenuItem.Price;
                 menuItemFromDb.Description = model.MenuItem.Description;
-                menuItemFromDb.Spicyness = model.MenuItem.Spicyness;
                 menuItemFromDb.CategoryId = model.MenuItem.CategoryId;
                 menuItemFromDb.SubCategoryId = model.MenuItem.SubCategoryId;
 

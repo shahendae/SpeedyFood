@@ -77,6 +77,7 @@ namespace SpeedyFood
             }
 
             dbInitializer.Initialize();
+            dbInitializer.SeedData();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();

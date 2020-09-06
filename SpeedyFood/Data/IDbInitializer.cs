@@ -7,6 +7,8 @@ namespace SpeedyFood.Data
 {
     public interface IDbInitializer
     {
-        void Initialize();
+        Task Initialize();
+        void SeedData();
+
     }
 }
